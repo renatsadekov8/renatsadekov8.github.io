@@ -9,12 +9,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
-      --card: #161616;
-      --accent: #7c3aed;
-      --accent2: #06b6d4;
-      --text: #f1f1f1;
-      --muted: #888;
+      --bg: #050510;
+      --card: rgba(255,255,255,0.04);
+      --accent: #c8a8f9;
+      --accent2: #8ab4f8;
+      --text: #e8e8f0;
+      --muted: #8888aa;
     }
 
     html { scroll-behavior: smooth; }
@@ -24,6 +24,48 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* STARS CANVAS */
+    #stars-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* MOON */
+    .moon {
+      position: fixed;
+      top: 60px;
+      right: 80px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffbe6, #f0d080 40%, #c8a830 70%, #a07820);
+      box-shadow:
+        0 0 30px rgba(240,200,80,0.3),
+        0 0 80px rgba(240,200,80,0.15),
+        inset -15px -10px 25px rgba(100,60,0,0.4);
+      z-index: 1;
+      animation: moonFloat 8s ease-in-out infinite;
+    }
+
+    .moon::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(100,60,0,0.2);
+      top: 20px; left: 30px;
+      box-shadow: 15px 20px 0 8px rgba(100,60,0,0.15), 30px 5px 0 5px rgba(100,60,0,0.1);
+    }
+
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
 
     /* NAV */
@@ -35,9 +77,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 60px;
-      background: rgba(13,13,13,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(5,5,16,0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200,168,249,0.1);
     }
 
     .logo {
@@ -63,6 +105,12 @@
 
     nav a:hover { color: var(--text); }
 
+    /* CONTENT WRAPPER */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
     /* HERO */
     .hero {
       min-height: 100vh;
@@ -72,41 +120,35 @@
       text-align: center;
       padding: 120px 40px 80px;
       position: relative;
-      overflow: hidden;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,168,249,0.08) 0%, transparent 70%);
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
     }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
-      top: 30%; right: 10%;
-      pointer-events: none;
-    }
-
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 120px; height: 120px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, #1a0a3a, #0a1a3a);
+      border: 2px solid rgba(200,168,249,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 3rem;
       margin: 0 auto 32px;
-      box-shadow: 0 0 40px rgba(124,58,237,0.4);
+      box-shadow: 0 0 40px rgba(200,168,249,0.2), 0 0 80px rgba(138,180,248,0.1);
+      animation: avatarPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes avatarPulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(200,168,249,0.2), 0 0 80px rgba(138,180,248,0.1); }
+      50% { box-shadow: 0 0 60px rgba(200,168,249,0.35), 0 0 120px rgba(138,180,248,0.2); }
     }
 
     .hero h1 {
@@ -144,28 +186,33 @@
       border-radius: 100px;
       font-size: 0.85rem;
       font-weight: 600;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,168,249,0.2);
+      background: rgba(200,168,249,0.06);
+      color: var(--accent);
     }
 
-    .badge.purple { border-color: rgba(124,58,237,0.4); color: #a78bfa; }
-    .badge.cyan   { border-color: rgba(6,182,212,0.4);  color: #67e8f9; }
-    .badge.green  { border-color: rgba(34,197,94,0.4);  color: #86efac; }
+    .badge.blue { border-color: rgba(138,180,248,0.2); color: var(--accent2); background: rgba(138,180,248,0.06); }
+    .badge.silver { border-color: rgba(200,200,220,0.2); color: #c8c8e0; background: rgba(200,200,220,0.06); }
 
     .cta-btn {
       display: inline-block;
       padding: 14px 36px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
+      background: linear-gradient(135deg, rgba(200,168,249,0.15), rgba(138,180,248,0.15));
+      border: 1px solid rgba(200,168,249,0.3);
+      color: var(--accent);
       text-decoration: none;
       border-radius: 100px;
       font-weight: 700;
       font-size: 1rem;
-      transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 8px 30px rgba(124,58,237,0.35);
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(200,168,249,0.1);
     }
 
-    .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .cta-btn:hover {
+      background: linear-gradient(135deg, rgba(200,168,249,0.25), rgba(138,180,248,0.25));
+      box-shadow: 0 0 40px rgba(200,168,249,0.2);
+      transform: translateY(-2px);
+    }
 
     /* SECTIONS */
     section {
@@ -189,7 +236,7 @@
       margin-bottom: 40px;
     }
 
-    /* CARDS GRID */
+    /* CARDS */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -198,32 +245,22 @@
 
     .card {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,168,249,0.1);
       border-radius: 20px;
       padding: 28px;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
     }
 
     .card:hover {
-      border-color: rgba(124,58,237,0.4);
+      border-color: rgba(200,168,249,0.3);
       transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(200,168,249,0.1);
     }
 
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 16px;
-    }
-
-    .card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .card-icon { font-size: 2rem; margin-bottom: 16px; }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.9rem; }
 
     /* ABOUT */
     .about-grid {
@@ -232,19 +269,13 @@
       gap: 20px;
     }
 
-    @media (max-width: 600px) {
-      .about-grid { grid-template-columns: 1fr; }
-      nav ul { display: none; }
-      nav { padding: 20px 24px; }
-      section { padding: 60px 24px; }
-    }
-
     .stat-card {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,168,249,0.1);
       border-radius: 20px;
       padding: 28px;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
     .stat-card .num {
@@ -255,44 +286,37 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .stat-card .label {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 4px;
-    }
+    .stat-card .label { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
 
     /* HOBBIES */
-    .hobbies {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .hobbies { display: flex; flex-wrap: wrap; gap: 12px; }
 
     .hobby-tag {
       padding: 10px 20px;
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,168,249,0.1);
       border-radius: 100px;
       font-size: 0.9rem;
       display: flex;
       align-items: center;
       gap: 8px;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.2s;
     }
+
+    .hobby-tag:hover { border-color: rgba(200,168,249,0.3); }
 
     /* CONTACT */
     .contact-box {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,168,249,0.15);
       border-radius: 24px;
       padding: 48px;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
-    .contact-box p {
-      color: var(--muted);
-      margin-bottom: 32px;
-      font-size: 1rem;
-    }
+    .contact-box p { color: var(--muted); margin-bottom: 32px; font-size: 1rem; }
 
     /* FOOTER */
     footer {
@@ -300,127 +324,260 @@
       padding: 40px;
       color: var(--muted);
       font-size: 0.85rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(200,168,249,0.08);
+      position: relative;
+      z-index: 2;
     }
 
     /* DIVIDER */
     .divider {
       height: 1px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(200,168,249,0.07);
       max-width: 900px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* SHOOTING STAR */
+    .shooting-star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      nav { padding: 20px 24px; }
+      section { padding: 60px 24px; }
+      .moon { width: 60px; height: 60px; right: 20px; top: 70px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="logo">Ренат.</div>
-    <ul>
-      <li><a href="#about">О себе</a></li>
-      <li><a href="#focus">Чем занимаюсь</a></li>
-      <li><a href="#hobbies">Интересы</a></li>
-      <li><a href="#contact">Контакт</a></li>
-    </ul>
-  </nav>
+  <!-- STARS -->
+  <canvas id="stars-canvas"></canvas>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div>
-      <div class="avatar">👋</div>
-      <h1>Привет, я <span>Ренат</span></h1>
-      <p class="subtitle">Медиабинг · Вайб кодинг · Москва</p>
-      <div class="badge-row">
-        <span class="badge purple">🎬 Медиабинг</span>
-        <span class="badge cyan">💻 Вайб кодинг</span>
-        <span class="badge green">✈️ Путешествия</span>
+  <!-- MOON -->
+  <div class="moon"></div>
+
+  <div class="content">
+
+    <!-- NAV -->
+    <nav>
+      <div class="logo">✦ Ренат.</div>
+      <ul>
+        <li><a href="#about">О себе</a></li>
+        <li><a href="#focus">Чем занимаюсь</a></li>
+        <li><a href="#hobbies">Интересы</a></li>
+        <li><a href="#contact">Контакт</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="avatar">🌙</div>
+        <h1>Привет, я <span>Ренат</span></h1>
+        <p class="subtitle">Медиабинг · Вайб кодинг · Москва</p>
+        <div class="badge-row">
+          <span class="badge">🎬 Медиабинг</span>
+          <span class="badge blue">💻 Вайб кодинг</span>
+          <span class="badge silver">✈️ Путешествия</span>
+        </div>
+        <a href="#about" class="cta-btn">✦ Узнать больше</a>
       </div>
-      <a href="#about" class="cta-btn">Узнать больше</a>
     </div>
-  </div>
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-label">О себе</div>
-    <h2>Кто я такой</h2>
-    <div class="about-grid">
-      <div class="stat-card">
-        <div class="num">33</div>
-        <div class="label">года</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">Москва</div>
-        <div class="label">родной город</div>
-      </div>
-      <div class="stat-card" style="grid-column: span 2;">
-        <div style="color: var(--muted); font-size: 1rem; line-height: 1.8;">
-          Я увлечённый человек, который стоит на стыке медиа и технологий.
-          Изучаю вайб кодинг — новый подход к созданию продуктов с помощью AI.
-          Женат, люблю активный образ жизни и исследовать новые места.
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-label">☽ О себе</div>
+      <h2>Кто я такой</h2>
+      <div class="about-grid">
+        <div class="stat-card">
+          <div class="num">33</div>
+          <div class="label">года</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">Москва</div>
+          <div class="label">родной город</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 2;">
+          <div style="color: var(--muted); font-size: 1rem; line-height: 1.8;">
+            Я увлечённый человек, который стоит на стыке медиа и технологий.
+            Изучаю вайб кодинг — новый подход к созданию продуктов с помощью AI.
+            Женат, люблю активный образ жизни и исследовать новые места.
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <!-- FOCUS -->
-  <section id="focus">
-    <div class="section-label">Чем занимаюсь</div>
-    <h2>Мои направления</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🎬</div>
-        <h3>Медиабинг</h3>
-        <p>Глубокое погружение в медиаконтент, анализ трендов и изучение того, как медиа формирует культуру.</p>
+    <!-- FOCUS -->
+    <section id="focus">
+      <div class="section-label">★ Чем занимаюсь</div>
+      <h2>Мои направления</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🎬</div>
+          <h3>Медиабинг</h3>
+          <p>Глубокое погружение в медиаконтент, анализ трендов и изучение того, как медиа формирует культуру.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Вайб кодинг</h3>
+          <p>Создание продуктов и сайтов с помощью AI-инструментов — новый способ воплощать идеи в жизнь без барьеров.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3>Саморазвитие</h3>
+          <p>Постоянное обучение новым технологиям и инструментам, которые меняют то, как мы работаем и творим.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>Вайб кодинг</h3>
-        <p>Создание продуктов и сайтов с помощью AI-инструментов — новый способ воплощать идеи в жизнь без барьеров.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- HOBBIES -->
+    <section id="hobbies">
+      <div class="section-label">✦ Интересы</div>
+      <h2>Что мне нравится</h2>
+      <div class="hobbies">
+        <div class="hobby-tag">🏋️ Спорт</div>
+        <div class="hobby-tag">✈️ Путешествия</div>
+        <div class="hobby-tag">🎬 Кино и сериалы</div>
+        <div class="hobby-tag">💻 Технологии</div>
+        <div class="hobby-tag">🤖 AI-инструменты</div>
+        <div class="hobby-tag">🌍 Новые культуры</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🚀</div>
-        <h3>Саморазвитие</h3>
-        <p>Постоянное обучение новым технологиям и инструментам, которые меняют то, как мы работаем и творим.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label">☽ Контакт</div>
+      <h2>Связаться со мной</h2>
+      <div class="contact-box">
+        <p>Хочешь пообщаться о медиа, вайб кодинге или просто познакомиться?</p>
+        <a href="mailto:renatsadekov8@gmail.com" class="cta-btn">✉️ Написать письмо</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- HOBBIES -->
-  <section id="hobbies">
-    <div class="section-label">Интересы</div>
-    <h2>Что мне нравится</h2>
-    <div class="hobbies">
-      <div class="hobby-tag">🏋️ Спорт</div>
-      <div class="hobby-tag">✈️ Путешествия</div>
-      <div class="hobby-tag">🎬 Кино и сериалы</div>
-      <div class="hobby-tag">💻 Технологии</div>
-      <div class="hobby-tag">🤖 AI-инструменты</div>
-      <div class="hobby-tag">🌍 Новые культуры</div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-label">Контакт</div>
-    <h2>Связаться со мной</h2>
-    <div class="contact-box">
-      <p>Хочешь пообщаться о медиа, вайб кодинге или просто познакомиться?</p>
-      <a href="mailto:renatsadekov8@gmail.com" class="cta-btn">✉️ Написать письмо</a>
-    </div>
-  </section>
+  </div>
 
   <footer>
-    <p>© 2026 Ренат · Сделано с помощью Claude AI</p>
+    <p>✦ © 2026 Ренат · Сделано с помощью Claude AI ✦</p>
   </footer>
+
+  <script>
+    // STARS
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let shootingStars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 3000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.2,
+          alpha: Math.random(),
+          speed: Math.random() * 0.005 + 0.002,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function createShootingStar() {
+      const angle = (Math.random() * 30 + 10) * Math.PI / 180;
+      const startX = Math.random() * canvas.width * 0.7;
+      const startY = Math.random() * canvas.height * 0.4;
+      shootingStars.push({
+        x: startX, y: startY,
+        vx: Math.cos(angle) * 12,
+        vy: Math.sin(angle) * 12,
+        len: Math.random() * 120 + 60,
+        alpha: 1,
+        trail: []
+      });
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Static stars
+      stars.forEach(s => {
+        const a = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 220, 255, ${a})`;
+        ctx.fill();
+      });
+
+      // Shooting stars
+      shootingStars = shootingStars.filter(s => s.alpha > 0.01);
+      shootingStars.forEach(s => {
+        s.trail.push({ x: s.x, y: s.y });
+        if (s.trail.length > 20) s.trail.shift();
+        s.x += s.vx;
+        s.y += s.vy;
+        s.alpha -= 0.018;
+
+        if (s.trail.length > 1) {
+          const grad = ctx.createLinearGradient(
+            s.trail[0].x, s.trail[0].y, s.x, s.y
+          );
+          grad.addColorStop(0, `rgba(255,255,255,0)`);
+          grad.addColorStop(1, `rgba(255,255,255,${s.alpha})`);
+          ctx.beginPath();
+          ctx.moveTo(s.trail[0].x, s.trail[0].y);
+          s.trail.forEach(p => ctx.lineTo(p.x, p.y));
+          ctx.lineTo(s.x, s.y);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.fill();
+      });
+    }
+
+    let lastShoot = 0;
+    function animate(t) {
+      drawStars(t * 0.001);
+      if (t - lastShoot > 3000 + Math.random() * 4000) {
+        createShootingStar();
+        lastShoot = t;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    resize();
+    createStars();
+    window.addEventListener('resize', () => { resize(); createStars(); });
+    requestAnimationFrame(animate);
+  </script>
 
 </body>
 </html>
