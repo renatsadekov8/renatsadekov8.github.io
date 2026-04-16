@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ренат — Медиабинг & Вайб Кодинг</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --card: #161616;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --text: #f1f1f1;
+      --muted: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+      top: 30%; right: 10%;
+      pointer-events: none;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 32px;
+      box-shadow: 0 0 40px rgba(124,58,237,0.4);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .badge {
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .badge.purple { border-color: rgba(124,58,237,0.4); color: #a78bfa; }
+    .badge.cyan   { border-color: rgba(6,182,212,0.4);  color: #67e8f9; }
+    .badge.green  { border-color: rgba(34,197,94,0.4);  color: #86efac; }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      text-decoration: none;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 8px 30px rgba(124,58,237,0.35);
+    }
+
+    .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* SECTIONS */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 900;
+      margin-bottom: 40px;
+    }
+
+    /* CARDS GRID */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .about-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      nav { padding: 20px 24px; }
+      section { padding: 60px 24px; }
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-card .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    /* HOBBIES */
+    .hobbies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hobby-tag {
+      padding: 10px 20px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 100px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* CONTACT */
+    .contact-box {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Ренат.</div>
+    <ul>
+      <li><a href="#about">О себе</a></li>
+      <li><a href="#focus">Чем занимаюсь</a></li>
+      <li><a href="#hobbies">Интересы</a></li>
+      <li><a href="#contact">Контакт</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="avatar">👋</div>
+      <h1>Привет, я <span>Ренат</span></h1>
+      <p class="subtitle">Медиабинг · Вайб кодинг · Москва</p>
+      <div class="badge-row">
+        <span class="badge purple">🎬 Медиабинг</span>
+        <span class="badge cyan">💻 Вайб кодинг</span>
+        <span class="badge green">✈️ Путешествия</span>
+      </div>
+      <a href="#about" class="cta-btn">Узнать больше</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">О себе</div>
+    <h2>Кто я такой</h2>
+    <div class="about-grid">
+      <div class="stat-card">
+        <div class="num">33</div>
+        <div class="label">года</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">Москва</div>
+        <div class="label">родной город</div>
+      </div>
+      <div class="stat-card" style="grid-column: span 2;">
+        <div style="color: var(--muted); font-size: 1rem; line-height: 1.8;">
+          Я увлечённый человек, который стоит на стыке медиа и технологий.
+          Изучаю вайб кодинг — новый подход к созданию продуктов с помощью AI.
+          Женат, люблю активный образ жизни и исследовать новые места.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOCUS -->
+  <section id="focus">
+    <div class="section-label">Чем занимаюсь</div>
+    <h2>Мои направления</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🎬</div>
+        <h3>Медиабинг</h3>
+        <p>Глубокое погружение в медиаконтент, анализ трендов и изучение того, как медиа формирует культуру.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Вайб кодинг</h3>
+        <p>Создание продуктов и сайтов с помощью AI-инструментов — новый способ воплощать идеи в жизнь без барьеров.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Саморазвитие</h3>
+        <p>Постоянное обучение новым технологиям и инструментам, которые меняют то, как мы работаем и творим.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOBBIES -->
+  <section id="hobbies">
+    <div class="section-label">Интересы</div>
+    <h2>Что мне нравится</h2>
+    <div class="hobbies">
+      <div class="hobby-tag">🏋️ Спорт</div>
+      <div class="hobby-tag">✈️ Путешествия</div>
+      <div class="hobby-tag">🎬 Кино и сериалы</div>
+      <div class="hobby-tag">💻 Технологии</div>
+      <div class="hobby-tag">🤖 AI-инструменты</div>
+      <div class="hobby-tag">🌍 Новые культуры</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Контакт</div>
+    <h2>Связаться со мной</h2>
+    <div class="contact-box">
+      <p>Хочешь пообщаться о медиа, вайб кодинге или просто познакомиться?</p>
+      <a href="mailto:renatsadekov8@gmail.com" class="cta-btn">✉️ Написать письмо</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Ренат · Сделано с помощью Claude AI</p>
+  </footer>
+
+</body>
+</html>
