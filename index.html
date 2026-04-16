@@ -318,6 +318,63 @@
 
     .contact-box p { color: var(--muted); margin-bottom: 32px; font-size: 1rem; }
 
+    .social-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      border: 1px solid;
+    }
+
+    .social-btn.instagram {
+      background: rgba(225,48,108,0.1);
+      border-color: rgba(225,48,108,0.3);
+      color: #f472b6;
+    }
+
+    .social-btn.instagram:hover {
+      background: rgba(225,48,108,0.2);
+      box-shadow: 0 0 30px rgba(225,48,108,0.2);
+      transform: translateY(-2px);
+    }
+
+    .social-btn.whatsapp {
+      background: rgba(37,211,102,0.1);
+      border-color: rgba(37,211,102,0.3);
+      color: #4ade80;
+    }
+
+    .social-btn.whatsapp:hover {
+      background: rgba(37,211,102,0.2);
+      box-shadow: 0 0 30px rgba(37,211,102,0.2);
+      transform: translateY(-2px);
+    }
+
+    .social-btn.email {
+      background: rgba(200,168,249,0.1);
+      border-color: rgba(200,168,249,0.3);
+      color: var(--accent);
+    }
+
+    .social-btn.email:hover {
+      background: rgba(200,168,249,0.2);
+      box-shadow: 0 0 30px rgba(200,168,249,0.2);
+      transform: translateY(-2px);
+    }
+
     /* FOOTER */
     footer {
       text-align: center;
@@ -469,7 +526,17 @@
       <h2>Связаться со мной</h2>
       <div class="contact-box">
         <p>Хочешь пообщаться о медиа, вайб кодинге или просто познакомиться?</p>
-        <a href="mailto:renatsadekov8@gmail.com" class="cta-btn">✉️ Написать письмо</a>
+        <div class="social-links">
+          <a href="https://instagram.com/renatsadekov" target="_blank" class="social-btn instagram">
+            📸 Instagram
+          </a>
+          <a href="https://wa.me/79911802458" target="_blank" class="social-btn whatsapp">
+            💬 WhatsApp
+          </a>
+          <a href="mailto:renatsadekov8@gmail.com" class="social-btn email">
+            ✉️ Email
+          </a>
+        </div>
       </div>
     </section>
 
