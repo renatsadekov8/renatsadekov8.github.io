@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advers Group — Полиграфия & Макетирование</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000000;
+      --card: rgba(255,255,255,0.05);
+      --accent: #ffffff;
+      --accent2: #e0e0e0;
+      --text: #f5f5f5;
+      --muted: #a0a0a0;
+      --success: #10b981;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%, #000000 100%);
+      background-image: url('https://images.pexels.com/photos/36559330/pexels-photo-36559330.jpeg?w=1600&q=80');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.60);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* STARS CANVAS - REMOVED */
+    #stars-canvas {
+      display: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* CONTENT WRAPPER */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, rgba(128,128,128,0.2), rgba(160,160,160,0.2));
+      border: 2px solid #808080;
+      color: #c0c0c0;
+      text-decoration: none;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(128,128,128,0.1);
+    }
+
+    .cta-btn:hover {
+      background: linear-gradient(135deg, rgba(128,128,128,0.3), rgba(160,160,160,0.3));
+      box-shadow: 0 0 40px rgba(128,128,128,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* SECTIONS */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 900;
+      margin-bottom: 40px;
+    }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,107,53,0.1);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(255,255,255,0.1);
+    }
+
+    .card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+    .card p { color: var(--muted); font-size: 0.9rem; }
+
+    /* CONTACT */
+    .contact-box {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-box p { color: var(--muted); margin-bottom: 32px; font-size: 1rem; }
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .info-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,107,53,0.1);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .info-label {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .info-text {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      border: 2px solid;
+      background: transparent;
+    }
+
+    .social-btn.phone {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .social-btn.phone:hover {
+      background: rgba(160,160,160,0.15);
+      transform: translateY(-2px);
+    }
+
+    .social-btn.mail {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .social-btn.mail:hover {
+      background: rgba(160,160,160,0.15);
+      transform: translateY(-2px);
+    }
+
+    .social-btn.email-btn {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .social-btn.email-btn:hover {
+      background: rgba(160,160,160,0.15);
+      transform: translateY(-2px);
+    }
+
+    .social-btn.instagram-btn {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .social-btn.instagram-btn:hover {
+      background: rgba(160,160,160,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      nav { padding: 20px 24px; }
+      section { padding: 60px 24px; }
+      .contact-info { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STARS -->
+  <canvas id="stars-canvas"></canvas>
+
+  <div class="content">
+
+    <!-- NAV -->
+    <nav>
+      <div class="logo">ADVERS GROUP</div>
+      <ul>
+        <li><a href="#advers-group">Услуги</a></li>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#contact">Контакт</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <h1>Advers<span> Group</span></h1>
+        <p class="subtitle">Полиграфия · Макетирование · Печать</p>
+        <p style="color: var(--muted); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto;">Высокое качество печати и полиграфических услуг по доступным ценам</p>
+        <a href="#contact" class="cta-btn">✦ Связаться</a>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SERVICES -->
+    <section id="advers-group">
+      <div class="section-label">★ Наши услуги</div>
+      <h2>Полиграфические решения</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Печать</h3>
+          <p>Флаеры, брошюры, каталоги, плакаты и другая печатная продукция высокого качества с использованием современного оборудования.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Упаковка</h3>
+          <p>Индивидуальная упаковка для ваших товаров. Коробки, пакеты, этикетки — все на заказ с вашим дизайном.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Макетирование</h3>
+          <p>Профессиональная разработка макетов и дизайна для вашей печатной продукции. Воплощаем ваши идеи в жизнь.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-label">☽ О компании</div>
+      <h2>Почему выбирают нас</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Быстрая доставка</h3>
+          <p>Мы гарантируем быстрое выполнение заказов без потери качества. Спешим, но аккуратно.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Доступные цены</h3>
+          <p>Конкурентные цены на все виды полиграфических услуг. Оптимальное соотношение цены и качества.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"></div>
+          <h3>Качество гарантировано</h3>
+          <p>Используем только профессиональное оборудование и материалы. Каждый заказ проходит контроль качества.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label">☽ Контакт</div>
+      <h2>Свяжитесь с нами</h2>
+      <div class="contact-box">
+        <p>Готовы воплотить ваш проект в жизнь? Свяжитесь с нами!</p>
+        <div class="contact-info">
+          <div class="info-item">
+            <div class="info-label">Адрес</div>
+            <div class="info-text">ул. Свободы, д. 35, стр. 19<br>Басманный район<br>м. Сходненская</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Телефон</div>
+            <div class="info-text">+7 915 311-70-15</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-text">info@advers-group.ru</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Instagram</div>
+            <div class="info-text">@advers-group</div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="tel:+79153117015" class="social-btn phone">
+            Позвонить
+          </a>
+          <a href="https://wa.me/79153117015" target="_blank" class="social-btn mail">
+            WhatsApp
+          </a>
+          <a href="mailto:info@advers-group.ru" class="social-btn email-btn">
+            Email
+          </a>
+          <a href="https://instagram.com/advers-group" target="_blank" class="social-btn instagram-btn">
+            Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>© 2026 Advers Group · Полиграфия & Макетирование</p>
+  </footer>
+
+  <script>
+    // Background animation is now CSS-based for better performance
+  </script>
+
+</body>
+</html>
